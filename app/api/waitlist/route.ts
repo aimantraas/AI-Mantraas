@@ -1,17 +1,8 @@
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
+import { appendToSheet, emailExists, SHEET_NAMES } from "@/lib/google-sheets";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^[0-9()+\-\s]{7,20}$/;
-
-// Helper function to escape CSV fields
-function escapeCsvField(field: string): string {
-  if (field.includes(",") || field.includes('"') || field.includes("\n")) {
-    return `"${field.replace(/"/g, '""')}"`;
-  }
-  return field;
-}
 
 export async function POST(req: Request) {
   try {
@@ -33,42 +24,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, message: "Invalid phone" }, { status: 400 });
     }
 
-    const dir = path.join(process.cwd(), "data");
-    const filePath = path.join(dir, "wait.csv");
-    await fs.mkdir(dir, { recursive: true });
-
-    let fileExists = true;
-    await fs.access(filePath).catch(async () => {
-      fileExists = false;
-      await fs.writeFile(filePath, "name,company,industry,email,phone,timestamp\n");
-    });
-
-    if (fileExists) {
-      const content = await fs.readFile(filePath, "utf-8");
-      if (!content.startsWith("name,company,industry,email,phone,timestamp")) {
-        const migrated = content
-          .split("\n")
-          .filter(Boolean)
-          .slice(1)
-          .map((row) => row.split(","))
-          .map((cols) => {
-            if (cols.length >= 6) return cols;
-            // pad legacy rows
-            return [...cols, ...Array(Math.max(0, 6 - cols.length)).fill("")];
-          })
-          .map((cols) => cols.slice(0, 6).join(","));
-        await fs.writeFile(filePath, "name,company,industry,email,phone,timestamp\n" + migrated.join("\n") + (migrated.length ? "\n" : ""));
-      }
+    // Check if email already exists
+    const exists = await emailExists(SHEET_NAMES.WAITLIST, emailVal);
+    if (exists) {
+      return NextResponse.json({ success: false, message: "This email is already registered." }, { status: 400 });
     }
 
     const timestamp = new Date().toISOString();
-    const escapedName = escapeCsvField(nameVal);
-    const escapedCompany = escapeCsvField(companyVal);
-    const escapedIndustry = escapeCsvField(industryVal);
-    const escapedEmail = escapeCsvField(emailVal);
-    const escapedPhone = escapeCsvField(phoneVal);
-    const escapedTimestamp = escapeCsvField(timestamp);
-    await fs.appendFile(filePath, `${escapedName},${escapedCompany},${escapedIndustry},${escapedEmail},${escapedPhone},${escapedTimestamp}\n`);
+
+    // Append to Google Sheets
+    await appendToSheet(SHEET_NAMES.WAITLIST, [nameVal, companyVal, industryVal, emailVal, phoneVal, timestamp]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

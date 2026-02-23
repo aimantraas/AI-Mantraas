@@ -64,8 +64,8 @@ A premium, high-performance marketing landing page built with modern web technol
 
 ### Backend Features
 - **Email Capture API** (`/api/subscribe`) - Newsletter subscription handling
-- **Waitlist API** (`/api/waitlist`) - Application form submission
-- **CSV Export** - Automatic waitlist data export to CSV
+- **Waitlist API** (`/api/waitlist`) - Application form submission to Google Sheets
+- **Google Sheets Integration** - Real-time data sync with authorized Google Sheet
 - **Environment-based Configuration** - Development, testing, and production support
 
 ### Social Integration
@@ -186,32 +186,44 @@ aimantraas-coming-soon/
 ## 🔄 Recent Updates (February 2026)
 
 ### Latest Changes
+✅ **Google Sheets Integration**
+- Replaced CSV file storage with Google Sheets API
+- Real-time data sync with authorized Google Sheet
+- Secure service account authentication
+- Removed `wait.csv` file from repository
+- Added `googleapis` dependency
+
 ✅ **UI/UX Improvements**
 - Replaced WhatsApp-only button with "Connect with us" button
 - Added electric blue gradient styling (matches brand theme)
 - Unified social channel access in modal
 
 ✅ **Security Patches**
-- Updated Next.js from v16.1.6 → v15.5.12
+- Updated Next.js from v16.1.6 → v15.2.4
 - Fixed CVE-2025-66478 vulnerability
-- Updated ESLint config compatibility
+- Fixed hydration mismatch in countdown timer
+- Secure credential management with environment variables
 
 ✅ **Code Quality**
 - Fixed unescaped apostrophe in text (HTML entity encoding)
+- Fixed hydration mismatch in countdown component
 - Cleaned up removed components and imports
 - Improved TypeScript type safety
 
 ✅ **Performance**
 - Optimized build output
-- Maintained First Load JS under 110kB
+- Maintained First Load JS under 107 kB
 - All pages prerendered as static content
 
 ### File Changes
+- `app/api/waitlist/route.ts` - Switched to Google Sheets API
+- `components/countdown-timer.tsx` - Fixed hydration mismatch
+- `.env.local` - Added Google Sheets configuration
 - `components/navbar.tsx` - Button text & handler updated
-- `components/whatsapp-modal.tsx` - No changes (reused for all socials)
 - `app/layout.tsx` - Updated state management
 - `app/page.tsx` - Minor cleanup
-- `package.json` - Dependencies updated
+- `package.json` - Added googleapis, updated dependencies
+- Removed `data/wait.csv` - Using Google Sheets now
 
 ---
 
@@ -220,21 +232,26 @@ aimantraas-coming-soon/
 Create a `.env.local` file in the project root:
 
 ```env
-# Email Configuration (Optional)
-SMTP_HOST=your-smtp-host
-SMTP_PORT=587
-SMTP_USER=your-email
-SMTP_PASS=your-password
-SMTP_FROM=noreply@aimantraas.com
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:8000
 
-# Analytics (Optional)
+# Google Sheets Configuration
+GOOGLE_SHEET_ID=your-sheet-id
+GOOGLE_PROJECT_ID=your-google-project-id
+GOOGLE_PRIVATE_KEY_ID=your-private-key-id
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account-email
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+GOOGLE_CLIENT_X509_CERT_URL=your-cert-url
+
+# Optional: Analytics
 NEXT_PUBLIC_GA_ID=your-ga-id
 
 # Environment
 NODE_ENV=development
 ```
 
-**Note:** The `.env.local` file is gitignored. Create it locally for email functionality.
+**Note:** The `.env.local` file is gitignored for security. All Google Sheets credentials come from your service account JSON file.
 
 ---
 
@@ -310,12 +327,11 @@ npm run start
 **Request Body:**
 ```json
 {
-  "firstName": "John",
-  "lastName": "Doe",
+  "name": "John Doe",
   "email": "john@company.com",
   "company": "TechCorp Inc",
   "industry": "Technology",
-  "message": "Interested in SAARTHI for our B2B sales"
+  "phone": "+1-555-0123"
 }
 ```
 
@@ -324,11 +340,11 @@ npm run start
 {
   "success": true,
   "message": "Application received",
-  "id": "unique-applicant-id"
+  "updatedRows": 1
 }
 ```
 
-**Data Storage:** Submissions are saved to `data/wait.csv`
+**Data Storage:** Submissions are automatically saved to your Google Sheet in real-time via the Google Sheets API.
 
 ---
 
@@ -386,12 +402,22 @@ npm run start
 
 ### Environment Variables for Vercel
 ```
-SMTP_HOST=
-SMTP_PORT=
-SMTP_USER=
-SMTP_PASS=
-NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_API_URL=https://api.aimantraas.com
+GOOGLE_SHEET_ID=
+GOOGLE_PROJECT_ID=
+GOOGLE_PRIVATE_KEY_ID=
+GOOGLE_SERVICE_ACCOUNT_EMAIL=
+GOOGLE_CLIENT_ID=
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY=
+GOOGLE_CLIENT_X509_CERT_URL=
 ```
+
+**Google Sheets Setup:**
+1. Create a Google Cloud project
+2. Create a service account with Sheets API access
+3. Download the service account JSON
+4. Copy credentials to environment variables above
+5. Share your Google Sheet with the service account email address
 
 ### Custom Domain
 1. Add domain in Vercel settings
@@ -483,9 +509,10 @@ This project is proprietary and confidential. Unauthorized copying, distribution
 ## 📝 Version Info
 
 - **Project Version:** 1.0.0
-- **Next.js:** 15.5.12 (latest patched)
+- **Next.js:** 15.2.4 (latest patched)
 - **React:** 19.0.0
 - **TypeScript:** 5.7.2
+- **Google APIs:** googleapis@171.4.0
 - **Last Updated:** February 23, 2026
 
 ---
