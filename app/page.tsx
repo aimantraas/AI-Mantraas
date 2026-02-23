@@ -199,7 +199,7 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-electric-300">Join Waitlist</p>
             <h3 className="font-heading text-3xl font-black text-white md:text-4xl">Built for enterprise go-to-market teams.</h3>
             <p className="text-slate-200/80">
-              We review every application manually. Enterprise companies only. Tell us about your team and we'll get in touch with next steps.
+              We review every application manually. Enterprise companies only. Tell us about your team and we&apos;ll get in touch with next steps.
             </p>
             <div className="inline-flex items-center gap-2 rounded-full border border-electric-500/20 bg-electric-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-electric-200">
               <span className="h-2 w-2 rounded-full bg-sky-400" />

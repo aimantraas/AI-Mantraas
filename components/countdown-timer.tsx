@@ -23,9 +23,13 @@ function getTimeLeft(targetDate: string): TimeLeft {
 }
 
 export function CountdownTimer({ targetDate }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => getTimeLeft(targetDate));
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    setTimeLeft(getTimeLeft(targetDate));
+
     const interval = setInterval(() => {
       setTimeLeft(getTimeLeft(targetDate));
     }, 1000);
@@ -46,9 +50,10 @@ export function CountdownTimer({ targetDate }: CountdownProps) {
         <div
           key={block.label}
           className="rounded-2xl border border-electric-500/35 bg-black/35 px-4 py-4 text-center shadow-[inset_0_0_20px_rgba(47,129,255,.16)]"
+          suppressHydrationWarning
         >
           <p className="font-heading text-3xl font-black text-electric-400 sm:text-4xl">
-            {String(block.value).padStart(2, "0")}
+            {mounted ? String(block.value).padStart(2, "0") : "--"}
           </p>
           <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-300">{block.label}</p>
         </div>
