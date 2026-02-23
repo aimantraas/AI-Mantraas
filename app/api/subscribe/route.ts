@@ -5,6 +5,14 @@ import path from "path";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^[0-9()+\-\s]{7,20}$/; // basic phone validation
 
+// Helper function to escape CSV fields
+function escapeCsvField(field: string): string {
+  if (field.includes(",") || field.includes('"') || field.includes("\n")) {
+    return `"${field.replace(/"/g, '""')}"`;
+  }
+  return field;
+}
+
 export async function POST(req: Request) {
   try {
     const { email, phone } = await req.json();
@@ -49,7 +57,10 @@ export async function POST(req: Request) {
     }
 
     const timestamp = new Date().toISOString();
-    await fs.appendFile(filePath, `${emailValue},${phoneValue},${timestamp}\n`);
+    const escapedEmail = escapeCsvField(emailValue);
+    const escapedPhone = escapeCsvField(phoneValue);
+    const escapedTimestamp = escapeCsvField(timestamp);
+    await fs.appendFile(filePath, `${escapedEmail},${escapedPhone},${escapedTimestamp}\n`);
 
     return NextResponse.json({ success: true });
   } catch (error) {

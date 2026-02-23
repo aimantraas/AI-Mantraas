@@ -16,6 +16,10 @@ const config: Config = {
           500: "#2f81ff",
           400: "#52c6ff",
           300: "#7dd4ff"
+        },
+        saarthi: {
+          blue: "#007BFF",
+          glow: "#00A2FF"
         }
       },
       fontFamily: {
@@ -24,7 +28,8 @@ const config: Config = {
       },
       boxShadow: {
         neon: "0 0 0.8rem rgba(82,198,255,.6), 0 0 2.2rem rgba(47,129,255,.45)",
-        card: "0 1rem 3.2rem rgba(1,8,26,.55)"
+        card: "0 1rem 3.2rem rgba(1,8,26,.55)",
+        "saarthi-glow": "0 0 0.8rem rgba(0,162,255,.6), 0 0 2.2rem rgba(0,123,255,.45)"
       },
       backgroundImage: {
         "electric-grid":
@@ -33,7 +38,8 @@ const config: Config = {
       animation: {
         "pulse-glow": "pulseGlow 2.8s ease-in-out infinite",
         drift: "drift 16s ease-in-out infinite alternate",
-        "pop-in": "popIn 0.8s ease-out forwards"
+        "pop-in": "popIn 0.8s ease-out forwards",
+        "saarthi-pop": "saarthiPop 0.35s ease-out forwards"
       },
       keyframes: {
         pulseGlow: {
@@ -49,6 +55,10 @@ const config: Config = {
           "50%": { transform: "scale(1.15)" },
           "70%": { transform: "scale(0.95)" },
           "100%": { transform: "scale(1)", opacity: "1" }
+        },
+        saarthiPop: {
+          "0%": { transform: "scale(0.9)" },
+          "100%": { transform: "scale(1.15)" }
         }
       }
     }

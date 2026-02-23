@@ -5,6 +5,14 @@ import path from "path";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^[0-9()+\-\s]{7,20}$/;
 
+// Helper function to escape CSV fields
+function escapeCsvField(field: string): string {
+  if (field.includes(",") || field.includes('"') || field.includes("\n")) {
+    return `"${field.replace(/"/g, '""')}"`;
+  }
+  return field;
+}
+
 export async function POST(req: Request) {
   try {
     const { name, company, industry, email, phone } = await req.json();
@@ -54,7 +62,13 @@ export async function POST(req: Request) {
     }
 
     const timestamp = new Date().toISOString();
-    await fs.appendFile(filePath, `${nameVal},${companyVal},${industryVal},${emailVal},${phoneVal},${timestamp}\n`);
+    const escapedName = escapeCsvField(nameVal);
+    const escapedCompany = escapeCsvField(companyVal);
+    const escapedIndustry = escapeCsvField(industryVal);
+    const escapedEmail = escapeCsvField(emailVal);
+    const escapedPhone = escapeCsvField(phoneVal);
+    const escapedTimestamp = escapeCsvField(timestamp);
+    await fs.appendFile(filePath, `${escapedName},${escapedCompany},${escapedIndustry},${escapedEmail},${escapedPhone},${escapedTimestamp}\n`);
 
     return NextResponse.json({ success: true });
   } catch (error) {

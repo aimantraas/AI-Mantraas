@@ -1,8 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Orbitron, Rajdhani } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { ElectricBackground } from "@/components/electric-background";
+import { WhatsAppModal } from "@/components/whatsapp-modal";
+import { useState } from "react";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -16,18 +19,27 @@ const rajdhani = Rajdhani({
   weight: ["400", "500", "600", "700"]
 });
 
-export const metadata: Metadata = {
-  title: "AI MANTRAAS | Coming Soon",
-  description: "AI MANTRAAS is launching a premium automation and AI learning ecosystem."
-};
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: RootLayoutProps) {
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
+
+  const handleConnectClick = () => {
+    setIsConnectModalOpen(true);
+  };
+
   return (
     <html lang="en">
       <body className={`${orbitron.variable} ${rajdhani.variable} bg-electric-950 font-body text-white`}>
         <ElectricBackground />
-        <Navbar />
+        <Navbar onConnectClick={handleConnectClick} />
         <main className="relative z-10 pt-24">{children}</main>
+        <WhatsAppModal
+          isOpen={isConnectModalOpen}
+          onClose={() => setIsConnectModalOpen(false)}
+        />
       </body>
     </html>
   );

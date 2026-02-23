@@ -29,6 +29,7 @@ export function EmailSignup() {
 
     setLoading(true);
     try {
+      // Determine API base URL (use environment variable or default)
       const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

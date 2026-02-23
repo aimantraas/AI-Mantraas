@@ -1,3 +1,5 @@
+"use client";
+
 import { Reveal } from "@/components/reveal";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { CountdownTimer } from "@/components/countdown-timer";
@@ -18,34 +20,46 @@ const advantages = [
 ];
 
 const comparison = [
-  { agency: "Manual list-building; variable quality", saarthi: "Live data enrichment + intent + tech stack filters" },
-  { agency: "Copy depends on individual writers", saarthi: "Programmatic copy tuned to persona, offer, and channel" },
-  { agency: "Follow-up inconsistency across reps", saarthi: "Sequenced, adaptive, and channel-aware follow-ups" },
-  { agency: "Reporting arrives weekly", saarthi: "Real-time performance + pipeline health dashboard" },
-  { agency: "Handoff friction to sales", saarthi: "Auto-booking with routing, calendar guardrails, and CRM writes" }
+  { agency: "Manual list-building; variable quality", saarthi: "Personalised for every single prospect." },
+  { agency: "Copy depends on individual writers", saarthi: "Inbox delivered. Every time. No spam." },
+  { agency: "Follow-up inconsistency across reps", saarthi: "Your system. Your pipeline. Always." },
+  { agency: "Reporting arrives weekly", saarthi: "Runs every day. Never stops. Never forgets." }
 ];
 
 const platforms = ["HubSpot", "Salesforce", "Zoho", "Slack", "WhatsApp", "Custom API"];
 
 export default function HomePage() {
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-20 px-6 pb-24 pt-28 md:px-10 md:pt-32">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-20 px-6 pb-24 pt-16 md:px-10 md:pt-20">
       <section className="relative overflow-hidden rounded-3xl border border-electric-500/30 bg-gradient-to-br from-[#0a1227] via-[#050915] to-[#081020] px-6 py-16 shadow-card backdrop-blur-xl md:px-12 md:py-24">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,213,255,0.15),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(80,120,255,0.14),transparent_30%)]" />
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <Reveal>
+            <div className="mx-auto mb-8 flex justify-center">
+              <div
+                className="relative flex items-center justify-center rounded-2xl border border-electric-400/20 bg-electric-900/40 p-3 shadow-[0_0_30px_rgba(0,212,255,0.15)] backdrop-blur-md"
+              >
+                <img
+                  src="/bglogo.png"
+                  alt="AI MANTRAAS Logo"
+                  className="h-32 w-auto md:h-40 object-contain transition-transform duration-700 hover:scale-110 drop-shadow-[0_0_15px_rgba(0,212,255,0.3)]"
+                />
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
             <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-electric-400/30 bg-electric-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-electric-300">
               AI SDR Automation • Premium B2B
             </p>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal delay={0.15}>
             <h1 className="font-heading text-2xl font-black leading-tight text-white sm:text-3xl md:text-4xl">
               Stop hunting leads. Start closing deals.
             </h1>
           </Reveal>
-          <Reveal delay={0.14}>
+           <Reveal delay={0.14}>
             <p className="mt-3 text-2xl md:text-3xl font-bold uppercase tracking-[0.22em] text-electric-200 animate-pop-in inline-block px-4 py-2 rounded-lg bg-electric-500/10 border border-electric-400/30 shadow-[0_0_20px_rgba(0,212,255,0.3)]">
-              SAARTHI - India&apos;s First A.I Sales Employee
+              <span className="saarthi text-saarthi-blue animate-saarthi-pop hover:scale-120 hover:shadow-saarthi-glow transition-transform duration-250 ease-in-out">SAARTHI</span> - India&apos;s First A.I Sales Employee
             </p>
           </Reveal>
           <Reveal delay={0.18}>
@@ -78,7 +92,7 @@ export default function HomePage() {
         <div className="space-y-5">
           <Reveal delay={0.05}>
             <div className="rounded-2xl border border-electric-500/25 bg-gradient-to-br from-electric-500/10 via-transparent to-electric-400/10 p-5">
-              <h3 className="text-sm font-semibold text-electric-200">Why SAARTHI wins</h3>
+              <h3 className="text-sm font-semibold text-electric-200">Why <span className="saarthi text-saarthi-blue animate-saarthi-pop hover:scale-120 hover:shadow-saarthi-glow transition-transform duration-250 ease-in-out">SAARTHI</span> wins</h3>
               <ul className="mt-3 space-y-2 text-slate-100/90">
                 {advantages.map((item) => (
                   <li key={item} className="flex items-start gap-2">
@@ -92,7 +106,7 @@ export default function HomePage() {
           <Reveal delay={0.12}>
             <div className="rounded-2xl border border-electric-500/25 bg-[#070f21] p-5">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <h3 className="font-heading text-2xl font-black text-white">Outreach Agency vs SAARTHI</h3>
+                <h3 className="font-heading text-2xl font-black text-white">Outreach Agency vs <span className="saarthi text-saarthi-blue animate-saarthi-pop hover:scale-120 hover:shadow-saarthi-glow transition-transform duration-250 ease-in-out">SAARTHI</span></h3>
                 <span className="inline-flex items-center rounded-full bg-electric-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-electric-200">
                   Systemized &gt; Manual
                 </span>
@@ -108,7 +122,7 @@ export default function HomePage() {
                       <p className="text-slate-200/85">{row.agency}</p>
                     </div>
                     <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-electric-200">SAARTHI</p>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-electric-200"><span className="saarthi text-saarthi-blue animate-saarthi-pop hover:scale-120 hover:shadow-saarthi-glow transition-transform duration-250 ease-in-out">SAARTHI</span></p>
                       <p className="text-white">{row.saarthi}</p>
                     </div>
                   </div>
@@ -123,7 +137,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-electric-300">How SAARTHI works</p>
-            <h3 className="mt-2 font-heading text-3xl font-black text-white md:text-4xl">Full-funnel automation, human control.</h3>
+            <h3 className="mt-2 font-heading text-3xl font-black text-white md:text-4xl">Your Ultimate Lead Chariot</h3>
             <p className="mt-3 max-w-2xl text-slate-200/80">
               Each stage is measurable, orchestrated, and can keep a human in the loop for approvals or let the system run autonomously.
             </p>
@@ -203,11 +217,15 @@ export default function HomePage() {
             <h3 className="mt-2 font-heading text-3xl font-black text-white md:text-4xl">Our Partners</h3>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="mt-10 flex justify-center">
-              <div className="flex h-28 w-56 items-center justify-center rounded-xl border border-electric-500/20 bg-white transition-all duration-300 hover:border-electric-400/50 hover:shadow-[0_0_20px_rgba(0,212,255,0.2)]">
-                <svg viewBox="0 0 512 136" className="h-14 w-auto" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M48.7 111.5c-13.2 0-24.1-4.5-32.4-13.3C8 89.4 3.8 78.3 3.8 64.9c0-13.5 4.2-24.7 12.5-33.4 8.3-8.8 19.2-13.3 32.4-13.3 10.3 0 19.2 2.8 26.5 8.3 7.3 5.5 12.2 13 14.5 22.3H72.3c-1.8-5.3-5-9.5-9.5-12.5-4.5-3-9.8-4.5-15.8-4.5-8.8 0-16 3-21.5 9-5.5 6-8.3 14-8.3 24s2.8 18 8.3 24c5.5 6 12.7 9 21.5 9 6 0 11.3-1.5 15.8-4.5 4.5-3 7.7-7.2 9.5-12.5h17.4c-2.3 9.3-7.2 16.8-14.5 22.3-7.3 5.5-16.2 8.3-26.5 8.3zm86.3-1.5h-16V19.7h16v90.3zm47.9 1.5c-8.8 0-16-2.5-21.5-7.5-5.5-5-8.3-11.8-8.3-20.3 0-8.5 3-15.3 8.3-20.3 5.5-5 12.7-7.5 21.5-7.5h21v-12c0-5.5-1.8-10-5.3-13.3-3.5-3.3-8.3-5-14.3-5-5.3 0-9.8 1.3-13.5 4-3.7 2.7-6 6.3-7 10.8h-16c1.3-8.5 5.3-15.3 11.8-20.5 6.5-5.2 14.8-7.8 24.8-7.8 10.8 0 19.5 3 26 9 6.5 6 9.8 14 9.8 24v46.8h-16v-12.5c-5.3 9.3-13.5 14-24.8 14zm3-13.5c7.3 0 13.3-2.3 18-7 4.7-4.7 7-10.5 7-17.5v-4h-20c-6 0-10.8 1.5-14.3 4.5-3.5 3-5.3 7-5.3 12 0 4.8 1.8 8.8 5.3 11.8 3.5 3.5 8.3 5.2 14.3 5.2zm72.5 13.5c-7.5 0-13.8-2-18.8-6-5-4-7.5-9.3-7.5-15.8h16c.3 3.3 1.8 6 4.5 8 2.7 2 6.3 3 10.5 3 4.3 0 7.8-.8 10.3-2.5 2.5-1.7 3.8-4 3.8-7 0-2.8-1.3-5-4-6.8-2.7-1.8-6.8-3.3-12.5-4.5-8.8-2-15.5-4.8-20-8.5-4.5-3.7-6.8-8.8-6.8-15.3 0-7 2.8-12.8 8.3-17.3 5.5-4.5 12.8-6.8 21.8-6.8 9 0 16.3 2.3 21.8 6.8 5.5 4.5 8.5 10.5 9 17.8h-16c-.3-3-1.8-5.5-4.3-7.5-2.5-2-6-3-10.3-3-4 0-7.3.8-9.8 2.5-2.5 1.7-3.8 4-3.8 7 0 2.5 1.3 4.5 4 6.3 2.7 1.8 7 3.3 13 4.8 8.5 2 15 4.8 19.5 8.5 4.5 3.7 6.8 8.8 6.8 15.3 0 7.3-2.8 13.3-8.5 17.8-5.7 4.5-13.2 6.8-22.5 6.8zm70.5-1.5h-16V19.7h16v90.3zm47.9 1.5c-8.8 0-16-2.5-21.5-7.5-5.5-5-8.3-11.8-8.3-20.3 0-8.5 3-15.3 8.3-20.3 5.5-5 12.7-7.5 21.5-7.5h21v-12c0-5.5-1.8-10-5.3-13.3-3.5-3.3-8.3-5-14.3-5-5.3 0-9.8 1.3-13.5 4-3.7 2.7-6 6.3-7 10.8h-16c1.3-8.5 5.3-15.3 11.8-20.5 6.5-5.2 14.8-7.8 24.8-7.8 10.8 0 19.5 3 26 9 6.5 6 9.8 14 9.8 24v46.8h-16v-12.5c-5.3 9.3-13.5 14-24.8 14zm3-13.5c7.3 0 13.3-2.3 18-7 4.7-4.7 7-10.5 7-17.5v-4h-20c-6 0-10.8 1.5-14.3 4.5-3.5 3-5.3 7-5.3 12 0 4.8 1.8 8.8 5.3 11.8 3.5 3.5 8.3 5.2 14.3 5.2zm72.5 13.5c-7.5 0-13.8-2-18.8-6-5-4-7.5-9.3-7.5-15.8h16c.3 3.3 1.8 6 4.5 8 2.7 2 6.3 3 10.5 3 4.3 0 7.8-.8 10.3-2.5 2.5-1.7 3.8-4 3.8-7 0-2.8-1.3-5-4-6.8-2.7-1.8-6.8-3.3-12.5-4.5-8.8-2-15.5-4.8-20-8.5-4.5-3.7-6.8-8.8-6.8-15.3 0-7 2.8-12.8 8.3-17.3 5.5-4.5 12.8-6.8 21.8-6.8 9 0 16.3 2.3 21.8 6.8 5.5 4.5 8.5 10.5 9 17.8h-16c-.3-3-1.8-5.5-4.3-7.5-2.5-2-6-3-10.3-3-4 0-7.3.8-9.8 2.5-2.5 1.7-3.8 4-3.8 7 0 2.5 1.3 4.5 4 6.3 2.7 1.8 7 3.3 13 4.8 8.5 2 15 4.8 19.5 8.5 4.5 3.7 6.8 8.8 6.8 15.3 0 7.3-2.8 13.3-8.5 17.8-5.7 4.5-13.2 6.8-22.5 6.8z" fill="#FF5C00"/>
-                </svg>
+            <div className="mt-10 flex flex-wrap justify-center gap-8">
+              {/* Apify Partner Logo Card */}
+              <div className="flex flex-col items-center justify-center gap-4 rounded-xl bg-[#0D0D0D] p-8 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,92,0,0.3)]">
+                <img
+                  src="/apify.jpeg"
+                  alt="Apify Partner Logo"
+                  className="max-w-[240px] w-full h-auto"
+                />
+                <p className="text-sm font-medium text-gray-300">Official Integration Partner</p>
               </div>
             </div>
           </Reveal>

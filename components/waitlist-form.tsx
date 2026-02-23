@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { FormEvent, useState } from "react";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -36,6 +34,7 @@ export function WaitlistForm() {
 
     setLoading(true);
     try {
+      // Determine API base URL (use environment variable or default)
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
